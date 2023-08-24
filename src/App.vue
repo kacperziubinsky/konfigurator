@@ -1,26 +1,29 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <TheHeader></TheHeader>
+  <TheConfig></TheConfig>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TheHeader from './components/TheHeader.vue';
+import TheConfig from './components/TheConfig.vue';
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  components:{
+    TheHeader,
+    TheConfig
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url('https://fonts.googleapis.com/css2?family=Nunito');
+*{
+  margin: 0;
+  box-sizing: border-box;
 }
+body{
+  font-family: 'Nunito', sans-serif;
+  background-color: rgb(173, 173, 173);
+}
+
 </style>
