@@ -8,53 +8,76 @@
                 
                 <div class="grid">
 
-                    <div class="category" @click="changeType(1)" :class="choose===1 ? 'active' : ''">
-                        <img src="https://images.prismic.io/hocomo-test/ebc29cdd-7fd1-46cb-b097-9a295a6cb6fb_138780796_1132553143863836_3687557998126616468_n+%281%29.jpg?auto=format&w=400&h=300&q=40" alt="">
-                        <p>Do 30m²</p>
-                    </div>
+                    <categoryBox
+                    v-for="house in houses"
+                    :key="house.id"
+                    :title="house.Title"
+                    :id="house.ID"
+                    :img="house.IMG"
+                    :choose_id="choose"
+                    @choosen="changeType"
+                    />         
 
-                    <div class="category"  @click="changeType(2)" :class="choose===2 ? 'active' : ''">
-                        <img src="https://images.prismic.io/hocomo-test/63ebd57a-4e29-41fb-8e46-f8d80f5159cd_Elka+z+gory+rzut_Post+OK-1111.jpg?auto=format&w=400&h=300&q=40" alt="">
-                        <p>Do 35m²</p>
-                    </div>
 
-                    <div class="category"  @click="changeType(3)" :class="choose===3 ? 'active' : ''">
-                        <img src="https://images.prismic.io/hocomo-test/0c32a351-832f-4a54-8176-40f9e698c991_140707464_1637781323088517_7635965712262624082_n111111.jpg?auto=format&w=400&h=300&q=40" alt="">
-                        <p>Z antrsolą</p>
-                    </div>
 
-                    <div class="category"  @click="changeType(4)" :class="choose===4 ? 'active' : ''">
-                        <img src="https://images.prismic.io/hocomo-test/06dc3218-b583-4488-bbb3-322947b6eb4d_42m.jpg?auto=format&w=400&h=300&q=40" alt="">
-                        <p>42m²</p>
-                    </div>
                 </div>
 
                 <h2>Wybierz Wielkość</h2>
 
                 <div class="grid">
+                    <sizeBox
+                    size="S"
+                    :choosed_size="size"
+                    @choosen_size="changeSize"
+                    ></sizeBox>
+   
+                    <sizeBox
+                    size="M"
+                    :choosed_size="size"
+                    @choosen_size="changeSize"
+                    ></sizeBox>
 
-                    <div class="category" @click="changeSize('S')" :class="size==='S' ? 'active' : ''" >
-                        <p>S</p>
-                    </div>
+                    <sizeBox
+                    size="L"
+                    :choosed_size="size"
+                    @choosen_size="changeSize"
+                    ></sizeBox>
 
-                    <div class="category" @click="changeSize('M')" :class="size==='M' ? 'active' : ''" >
-                        <p>M</p>
-                    </div>
+                    <sizeBox
+                    size="XL"
+                    :choosed_size="size"
+                    @choosen_size="changeSize"
+                    ></sizeBox>
 
-                    <div class="category" @click="changeSize('L')" :class="size==='L' ? 'active' : ''" >
-                        <p>L</p>
-                    </div>
-
-                    <div class="category" @click="changeSize('XL')" :class="size==='XL' ? 'active' : ''" >
-                        <p>XL</p>
-                    </div>
 
                 </div>
+
                 
+                <h2>Dodatki</h2>
+                <div class="checkboxes">
+                    <div>                    
+                        <input type="checkbox" name="garage" v-model="garage" :true-value="true" :false-value="false" >
+                        <label for="garage">Garaż (+15%)</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" name="warming" v-model="warming" :true-value="true" :false-value="false">
+                        <label for="warming">Ocieplenie (+25%)</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" name="furniture" v-model="furniture" :true-value="true" :false-value="false">
+                        <label for="furniture">Umeblowanie (+40%)</label>
+                    </div>
+
+
+                </div>
+
+
 
             </div>
 
-            <housePrice class="sum" :type="choose" :size="size"></housePrice>
+            <housePrice class="sum" :type="choose" :size="size" :bonus="bonus_value"></housePrice>
 
         </div>
 
@@ -70,35 +93,63 @@
 <script>
 import visualImage from './visualImage.vue';
 import housePrice from './housePrice.vue';
+import categoryBox from './categoryBox.vue';
+import sizeBox from './sizeBox.vue';
 export default{
     components:{
         visualImage,
-        housePrice
+        housePrice,
+        categoryBox,
+        sizeBox
     },
     data(){
         return{
             choose: 1,
             size: 'S',
-
+            bonus:0,
+            warming: false,
+            garage: false,
+            furniture: false,
+            houses:[
+                {ID: 1, IMG: 'https://images.prismic.io/hocomo-test/ebc29cdd-7fd1-46cb-b097-9a295a6cb6fb_138780796_1132553143863836_3687557998126616468_n+%281%29.jpg', Title: 'Do 30m²'},
+                {ID: 2, IMG: 'https://images.prismic.io/hocomo-test/63ebd57a-4e29-41fb-8e46-f8d80f5159cd_Elka+z+gory+rzut_Post+OK-1111.jpg?auto=format&w=400&h=300&q=40', Title: 'Do 35m²'},
+                {ID: 3, IMG: 'https://images.prismic.io/hocomo-test/0c32a351-832f-4a54-8176-40f9e698c991_140707464_1637781323088517_7635965712262624082_n111111.jpg?auto=format&w=400&h=300&q=40', Title: 'Z antrsolą'},
+                {ID: 4, IMG: 'https://images.prismic.io/hocomo-test/06dc3218-b583-4488-bbb3-322947b6eb4d_42m.jpg?auto=format&w=400&h=300&q=40', Title: '42m²'}
+            ]
         }
     },
     methods:{
-        changeType(n){
-            this.choose=n;
+        changeType(houseID){
+            this.choose=Number(houseID);
         },
         changeSize(n){
             this.size=n;
+        },
+        addBonus(n){
+            this.bonus+=n
         }
     },
     watch:{
         choose(){
             this.size='S';
-        }
+            this.warming=this.garage=this.furniture=false
+        },
     },
     computed:{
-        full() {
-            return this.choose + ' ' + this.size;
+        bonus_value(){
+            let value=0
+            if(this.garage){
+                value+=0.15
             }
+            if(this.warming){
+                value+=0.25
+            }
+            if(this.furniture){
+                value+=0.40
+            }
+
+            return value
+        }
     }
 }
 
@@ -145,18 +196,14 @@ h2{
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-.category{
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px;
-    border: 2px solid rgba(255, 255, 255, 0);
-    cursor: pointer;
-    padding: 1rem;
-    margin: 1rem;
-}
+
 img{
     width: 100%;
     height: auto;
 }
-.category p{
+.category p,
+label
+{
     font-size: 1.25rem;
     line-height: 1.6;
 }
@@ -173,6 +220,12 @@ img{
     width: auto;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px;
     border: 2px solid rgba(255, 255, 255, 0);
+}
+label{
+    font-weight: bold;
+}
+input[type=checkbox]{
+    margin-right: 1rem;
 }
 
 </style>
