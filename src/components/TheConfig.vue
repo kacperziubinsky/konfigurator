@@ -25,31 +25,17 @@
                 <h2>Wybierz Wielkość</h2>
 
                 <div class="grid">
-                    <sizeBox
-                    size="S"
-                    :choosed_size="size"
-                    @choosen_size="changeSize"
-                    ></sizeBox>
-   
-                    <sizeBox
-                    size="M"
-                    :choosed_size="size"
-                    @choosen_size="changeSize"
-                    ></sizeBox>
-
-                    <sizeBox
-                    size="L"
-                    :choosed_size="size"
-                    @choosen_size="changeSize"
-                    ></sizeBox>
-
-                    <sizeBox
-                    size="XL"
-                    :choosed_size="size"
-                    @choosen_size="changeSize"
-                    ></sizeBox>
 
 
+                    <sizeBox
+                    v-for="item in houses[choose].Size"
+                    :key="item"
+                    :size="item"
+                    :choosed_size="size"
+                    @choosen_size="changeSize"
+                    />
+
+                    
                 </div>
 
                 
@@ -104,17 +90,21 @@ export default{
     },
     data(){
         return{
-            choose: 1,
+            choose: 0,
             size: 'S',
             bonus:0,
             warming: false,
             garage: false,
             furniture: false,
             houses:[
-                {ID: 1, IMG: 'https://images.prismic.io/hocomo-test/ebc29cdd-7fd1-46cb-b097-9a295a6cb6fb_138780796_1132553143863836_3687557998126616468_n+%281%29.jpg', Title: 'Do 30m²'},
-                {ID: 2, IMG: 'https://images.prismic.io/hocomo-test/63ebd57a-4e29-41fb-8e46-f8d80f5159cd_Elka+z+gory+rzut_Post+OK-1111.jpg?auto=format&w=400&h=300&q=40', Title: 'Do 35m²'},
-                {ID: 3, IMG: 'https://images.prismic.io/hocomo-test/0c32a351-832f-4a54-8176-40f9e698c991_140707464_1637781323088517_7635965712262624082_n111111.jpg?auto=format&w=400&h=300&q=40', Title: 'Z antrsolą'},
-                {ID: 4, IMG: 'https://images.prismic.io/hocomo-test/06dc3218-b583-4488-bbb3-322947b6eb4d_42m.jpg?auto=format&w=400&h=300&q=40', Title: '42m²'}
+                {ID: 0, IMG: 'https://images.prismic.io/hocomo-test/ebc29cdd-7fd1-46cb-b097-9a295a6cb6fb_138780796_1132553143863836_3687557998126616468_n+%281%29.jpg', Title: 'Do 30m²', Size: ['S', 'M', 'L', 'XL']},
+                {ID: 1, IMG: 'https://images.prismic.io/hocomo-test/63ebd57a-4e29-41fb-8e46-f8d80f5159cd_Elka+z+gory+rzut_Post+OK-1111.jpg?auto=format&w=400&h=300&q=40', Title: 'Do 35m²', Size: ['S', 'M', 'L']},
+                {ID: 2, IMG: 'https://images.prismic.io/hocomo-test/0c32a351-832f-4a54-8176-40f9e698c991_140707464_1637781323088517_7635965712262624082_n111111.jpg?auto=format&w=400&h=300&q=40', Title: 'Z antrsolą', Size: ['S', 'M', 'L', 'XL']},
+                {ID: 3, IMG: 'https://images.prismic.io/hocomo-test/06dc3218-b583-4488-bbb3-322947b6eb4d_42m.jpg?auto=format&w=400&h=300&q=40', Title: '42m²', Size: ['S', 'M', 'L', 'XL']}
+            ],
+            sizes:[
+                {ID: 0, S:65000, M:87000, L:95000, XL:100000 },
+                {ID: 1, S:75000, M:87000, L:96400, XL:105000}
             ]
         }
     },
@@ -127,6 +117,9 @@ export default{
         },
         addBonus(n){
             this.bonus+=n
+        },
+        getSizesById(id) {
+            return this.sizes.filter(size => size.ID === id);
         }
     },
     watch:{
