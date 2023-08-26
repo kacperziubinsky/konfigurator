@@ -10,7 +10,6 @@ header{
     color: white;
     text-align: center;
     padding: 2rem;
-    height: 10vh;
 }
 
 </style>
