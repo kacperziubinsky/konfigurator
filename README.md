@@ -1,4 +1,9 @@
-# konfigurator
+# Konfigurator Domu
+
+## DEMO
+```
+https://ziubinski.hostline.net.pl/
+```
 
 ## Project setup
 ```
